@@ -8,7 +8,7 @@ export class UsersService {
         {"id":2 , "name":"rahul", "weapon" : "Bombs"} 
     ]
 
-    getUsers(weapon?:'sword' | 'Guns') {
+    public getUsers(weapon?:'sword' | 'Guns') {
             if(weapon) {
                 return this.users.filter(user => user.weapon == weapon)
             }

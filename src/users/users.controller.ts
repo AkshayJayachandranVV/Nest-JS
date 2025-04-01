@@ -1,12 +1,15 @@
-import { Controller,Delete,Get,Post,Put,Param, Body, Query, NotFoundException} from '@nestjs/common';
+import { Controller,Delete,Get,Post,Put,Param, Body, Query, NotFoundException, ParseIntPipe, UseGuards} from '@nestjs/common';
 import { CreateUserDto } from './dto/create-users.dto';
 import { UpdateUserDto } from './dto/update-helo.dto';
 import { UsersService } from './users.service';
+import { AgeGuard } from 'src/age/age.guard';
 
 @Controller('users')
 export class UsersController {
-
-    constructor(private readonly userService : UsersService) {}
+    tor:number 
+    constructor(private readonly userService : UsersService) {
+      this.tor = 15
+    }
 
     @Get()
     getUsers(@Query('weapon') weapon : 'sword' | 'Guns') {
@@ -27,6 +30,7 @@ export class UsersController {
     }
 
     @Post()
+    @UseGuards(AgeGuard)
     createUser(@Body() createUserDto: CreateUserDto) {
         return this.userService.createUser(createUserDto.id,createUserDto.name,createUserDto.weapon);
     }
