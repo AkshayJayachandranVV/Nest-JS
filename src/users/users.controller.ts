@@ -1,35 +1,37 @@
-import { Controller,Delete,Get,Post,Put,Param, Body} from '@nestjs/common';
+import { Controller,Delete,Get,Post,Put,Param, Body, Query} from '@nestjs/common';
 import { CreateUserDto } from './dto/create-users.dto';
 import { UpdateUserDto } from './dto/update-helo.dto';
+import { UsersService } from './users.service';
 
 @Controller('users')
 export class UsersController {
+
+    constructor(private readonly userService : UsersService) {}
+
     @Get()
-    getUsers() {
-        return [];
+    getUsers(@Query('weapon') weapon : 'sword' | 'Guns') {
+        return this.userService.getUsers(weapon);
     }
     
     @Get(':id')
-    getOneUser(@Param('id') id : string) {
-        return {id:id};
+    getOneUser(@Param('id') id : number) {
+        return this.userService.getUser(id);
     }
 
     @Post()
     createUser(@Body() createUserDto: CreateUserDto) {
-        return {
-            name:createUserDto.name
-        };
+        return this.userService.createUser(createUserDto.id,createUserDto.name,createUserDto.weapon);
     }
 
 
-    @Put(':id')
-    updateUser(@Param('id') id : string , @Body() updateUserDto: UpdateUserDto) {
-        return {name : updateUserDto}
+    @Put()
+    updateUser( @Body() updateUserDto: UpdateUserDto) {
+        return this.userService.updateUser(updateUserDto.id,updateUserDto.name,updateUserDto.weapon)
     }
 
     @Delete(':id')
-    deleteUser(@Param('id') id : string) {
-        return {}
+    deleteUser(@Param('id') id : number) {
+        return this.userService.removeUser(id)
     } 
 
 }

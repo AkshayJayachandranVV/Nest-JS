@@ -1,3 +1,5 @@
 export class CreateUserDto {
-    name:string
+    id:number;
+    name:string;
+    weapon:string;
 }
