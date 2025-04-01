@@ -2,7 +2,8 @@ import { Controller,Delete,Get,Post,Put,Param, Body, Query, NotFoundException, P
 import { CreateUserDto } from './dto/create-users.dto';
 import { UpdateUserDto } from './dto/update-helo.dto';
 import { UsersService } from './users.service';
-import { AgeGuard } from 'src/age/age.guard';
+import { AgeGuard } from 'src/gaurds/age/age.guard';
+import { LoggerMiddleware } from 'src/middleware/logger/logger.middleware';
 
 @Controller('users')
 export class UsersController {
