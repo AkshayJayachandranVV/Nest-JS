@@ -19,7 +19,9 @@ export class UsersService {
        
             const user =  this.users.filter(user => user.id == id)
 
-            if(!user) {
+            console.log(user)
+
+            if(user.length == 0) {
                 throw new Error("User not found")
             }
         

@@ -1,4 +1,4 @@
-import { Controller,Delete,Get,Post,Put,Param, Body, Query} from '@nestjs/common';
+import { Controller,Delete,Get,Post,Put,Param, Body, Query, NotFoundException} from '@nestjs/common';
 import { CreateUserDto } from './dto/create-users.dto';
 import { UpdateUserDto } from './dto/update-helo.dto';
 import { UsersService } from './users.service';
@@ -10,12 +10,20 @@ export class UsersController {
 
     @Get()
     getUsers(@Query('weapon') weapon : 'sword' | 'Guns') {
-        return this.userService.getUsers(weapon);
+        try {
+            return this.userService.getUsers(weapon);
+        } catch (error) {
+            throw new NotFoundException()
+        }
     }
     
     @Get(':id')
     getOneUser(@Param('id') id : number) {
-        return this.userService.getUser(id);
+        try {
+            return this.userService.getUser(id);
+        } catch (error) {
+            throw new NotFoundException()
+        }
     }
 
     @Post()
